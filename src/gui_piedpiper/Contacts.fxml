@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="gui_piedpiper.ContactsController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#23b881bf" height="371.0" layoutX="14.0" layoutY="14.0" stroke="WHITE" strokeType="INSIDE" width="572.0" />
+      <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="16.0" prefHeight="371.0" prefWidth="229.0" vbarPolicy="ALWAYS">
+         <content>
+            <ListView prefHeight="369.0" prefWidth="211.0" />
+         </content>
+      </ScrollPane>
+      <Text fill="WHITE" fontSmoothingType="LCD" layoutX="364.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Contacts">
+         <font>
+            <Font name="Calibri Bold" size="27.0" />
+         </font>
+      </Text>
+      <Button fx:id="doneButton" layoutX="521.0" layoutY="346.0" mnemonicParsing="false" onAction="#doneButtonAction" text="Done" />
+      <TextField fx:id="addContact" layoutX="290.0" layoutY="128.0" />
+      <TextField fx:id="deleteContact" layoutX="290.0" layoutY="219.0" />
+      <Text fill="WHITE" layoutX="290.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text=" Add Contact:">
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="290.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Delete Contact:">
+         <font>
+            <Font name="Calibri" size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="addButton" layoutX="489.0" layoutY="128.0" mnemonicParsing="false" onAction="#addButtonAction" text="Add" />
+      <Button fx:id="deleteButton" layoutX="489.0" layoutY="219.0" mnemonicParsing="false" onAction="#deleteButtonAction" text="Delete" />
+   </children>
+</AnchorPane>
