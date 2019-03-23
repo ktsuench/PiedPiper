@@ -45,6 +45,10 @@ import javafx.stage.Window;
  * @author Nailah Azeez
  */
 public class LoginController implements Initializable {
+  private static final String ERROR_EMAIL = "Please enter your email address";
+  private static final String ERROR_NAME = "Please enter your name";
+  private static final String ERROR_PASSWORD = "Please enter your password";
+  private static final String LAYOUT_MAIN_PAGE = "layouts/mainPage.fxml";
 
   private MainPageController controller;
 
@@ -75,19 +79,19 @@ public class LoginController implements Initializable {
   @FXML
   protected void loginButtonAction(ActionEvent event) throws IOException {
     Window owner = loginButton.getScene().getWindow();
+    String AlertTitle = "Login Error!";
+
     if (txtEmailL.getText().isEmpty()) {
-      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Login Error!",
-          "Please enter your email address");
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_EMAIL);
       return;
     }
     if (txtPasswordL.getText().isEmpty()) {
-      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Login Error!",
-          "Please enter your password");
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_PASSWORD);
       return;
     }
 
     //Once Login button is pressed, the scene will change the the main page
-    Parent mainPage = FXMLLoader.load(getClass().getResource("layouts/mainPage.fxml"));
+    Parent mainPage = FXMLLoader.load(getClass().getResource(LAYOUT_MAIN_PAGE));
     Scene main_page = new Scene(mainPage);
     Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     app_stage.setScene(main_page);
@@ -99,25 +103,23 @@ public class LoginController implements Initializable {
   @FXML
   protected void signUpButtonAction(ActionEvent event) throws IOException {
     Window owner = signUpButton.getScene().getWindow();
+    String AlertTitle = "Create Account Error!";
 
     if (txtNameC.getText().isEmpty()) {
-      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Create Account Error!",
-          "Please enter your name");
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_NAME);
       return;
     }
     if (txtEmailC.getText().isEmpty()) {
-      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Create Account Error!",
-          "Please enter your email address");
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_EMAIL);
       return;
     }
     if (txtPasswordC.getText().isEmpty()) {
-      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, "Create Account Error!",
-          "Please create a password");
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_PASSWORD);
       return;
     }
 
     //Once Sign Up button is pressed, the scene will change the the main page
-    Parent mainPage = FXMLLoader.load(getClass().getResource("layouts/mainPage.fxml"));
+    Parent mainPage = FXMLLoader.load(getClass().getResource(LAYOUT_MAIN_PAGE));
     Scene main_page = new Scene(mainPage);
     Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     app_stage.setScene(main_page);
