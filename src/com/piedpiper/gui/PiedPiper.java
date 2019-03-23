@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author matt
+ * @author Kent Tsuenchy
  */
 public class PiedPiper extends Application {
   /**

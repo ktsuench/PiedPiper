@@ -36,7 +36,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author matt
+ * @author Kent Tsuenchy
  */
 public class PiedController implements Initializable {
   static private int clientId = 0;
