@@ -31,9 +31,9 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author matt
+ * @author Nailah Azeez
  */
-public class PiedPiper extends Application {
+public class ClientGUI extends Application {
   /**
    * @param args the command line arguments
    */
@@ -43,7 +43,7 @@ public class PiedPiper extends Application {
 
   @Override
   public void start(Stage stage) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getResource("layouts/PiedPiper.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("Login.fxml"));
 
     Scene scene = new Scene(root);
 

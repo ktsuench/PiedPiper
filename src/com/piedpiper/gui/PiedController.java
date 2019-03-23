@@ -23,20 +23,23 @@
  */
 package com.piedpiper.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  *
  * @author matt
  */
 public class PiedController implements Initializable {
-  @FXML
-  private Label label;
+  static private int clientId = 0;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -44,8 +47,19 @@ public class PiedController implements Initializable {
   }
 
   @FXML
-  private void handleButtonAction(ActionEvent event) {
-    System.out.println("You clicked me!");
-    label.setText("Hello World!");
+  private void startClient(ActionEvent event) throws IOException {
+    Parent root = FXMLLoader.load(getClass().getResource("layouts/Login.fxml"));
+    Stage stage = new Stage();
+    stage.setScene(new Scene(root));
+    stage.setTitle("Client " + clientId);
+    stage.show();
+    // Hide this current window (if this is what you want)
+    // ((Node) (event.getSource())).getScene().getWindow().hide();
+    clientId++;
+  }
+
+  @FXML
+  private void startServer(ActionEvent event) {
+    System.out.println("Server code not implemented yet...");
   }
 }

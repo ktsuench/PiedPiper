@@ -10,7 +10,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui_piedpiper.MainPageController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piedpiper.gui.MainPageController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#22b983bf" height="400.0" layoutX="200.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="12.0" width="200.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#23b881bf" height="400.0" layoutX="394.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="12.0" width="206.0" />
@@ -23,13 +23,13 @@
       <Button fx:id="contactsButton" layoutX="50.0" layoutY="245.0" mnemonicParsing="false" onAction="#contactsButtonAction" prefHeight="41.0" prefWidth="100.0" text="Contacts" />
       <ImageView fitHeight="92.0" fitWidth="100.0" layoutX="54.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Images/img_162044.png" />
+            <Image url="@../Images/img_162044.png" />
          </image>
       </ImageView>
       <Button fx:id="messageButton" layoutX="251.0" layoutY="245.0" mnemonicParsing="false" onAction="#messageButtonAction" prefHeight="41.0" prefWidth="100.0" text="Message" />
       <ImageView fitHeight="92.0" fitWidth="109.0" layoutX="255.0" layoutY="44.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Images/img_328443.png" />
+            <Image url="@../Images/img_328443.png" />
          </image>
       </ImageView>
       <Label alignment="BASELINE_CENTER" layoutX="232.0" layoutY="158.0" prefHeight="103.0" prefWidth="139.0" text="Connect with Friends &#10;and get Chatting" textAlignment="CENTER" textFill="WHITE">
@@ -39,7 +39,7 @@
       </Label>
       <ImageView fitHeight="119.0" fitWidth="132.0" layoutX="438.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@Images/_icons_settings_notifications_351538.png" />
+            <Image url="@../Images/_icons_settings_notifications_351538.png" />
          </image>
       </ImageView>
       <Button fx:id="notificationButton" layoutX="442.0" layoutY="245.0" mnemonicParsing="false" onAction="#notificationButtonAction" prefHeight="41.0" prefWidth="111.0" text="Notifications" />
@@ -47,6 +47,6 @@
          <font>
             <Font name="Calibri Bold" size="14.0" />
          </font>
-      </Label>         
+      </Label>
    </children>
 </AnchorPane>

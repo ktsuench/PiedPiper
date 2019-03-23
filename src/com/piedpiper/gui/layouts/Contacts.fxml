@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="gui_piedpiper.ContactsController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="com.piedpiper.gui.ContactsController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#23b881bf" height="371.0" layoutX="14.0" layoutY="14.0" stroke="WHITE" strokeType="INSIDE" width="572.0" />
       <ScrollPane hbarPolicy="NEVER" layoutX="14.0" layoutY="16.0" prefHeight="371.0" prefWidth="229.0" vbarPolicy="ALWAYS">
