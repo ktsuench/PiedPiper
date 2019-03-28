@@ -26,8 +26,6 @@ package com.piedpiper.gui;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -47,18 +45,17 @@ import javafx.stage.Window;
  * @author Nailah Azeez
  */
 public class LoginController implements Initializable {
-  
-  private static final String ERROR_EMAIL = "Please enter your email address";
-  private static final String ERROR_NAME = "Please enter your name";
-  private static final String ERROR_PASSWORD = "Please enter your password";
-  private static final String ERROR_MIN_CHAR_NAME = "Please ensure you have entered you name correctly, a minimum of 3 characters is required";
-  private static final String NAME_PATTERN = "[a-zA-Z]*";
-  private static final String ERROR_NAME_CHAR = "Name field only accepts letters, please try again";
   private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
-    + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+      + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
+  private static final String ERROR_EMAIL = "Please enter your email address";
   private static final String ERROR_EMAIL_FORMAT = "The format of the email address you have enters is incorrect (eg. Correct format: user@gmail.com)";
+  private static final String ERROR_MIN_CHAR_NAME = "Please ensure you have entered you name correctly, a minimum of 3 characters is required";
   private static final String ERROR_MIN_CHAR_PASSWORD = "Please create a password with a minimum of 8 characters";
+  private static final String ERROR_NAME = "Please enter your name";
+  private static final String ERROR_NAME_CHAR = "Name field only accepts letters, please try again";
+  private static final String ERROR_PASSWORD = "Please enter your password";
   private static final String LAYOUT_MAIN_PAGE = "layouts/mainPage.fxml";
+  private static final String NAME_PATTERN = "[a-zA-Z]*";
 
   private MainPageController controller;
 
@@ -108,7 +105,7 @@ public class LoginController implements Initializable {
     app_stage.show();
 
   }
-  
+
   //Creating an account
   @FXML
   protected void signUpButtonAction(ActionEvent event) throws IOException {
@@ -117,45 +114,45 @@ public class LoginController implements Initializable {
 
     //conditions for Name field
     if (txtNameC.getText().isEmpty()) {
-        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_NAME);
-        return;
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_NAME);
+      return;
     }
     if (txtNameC.getText().length() < 3) {
-        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_MIN_CHAR_NAME);
-        return;
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_MIN_CHAR_NAME);
+      return;
     }
     String name = txtNameC.getText();
     if (!name.matches(NAME_PATTERN)) {
-        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_NAME_CHAR);
-        return;
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_NAME_CHAR);
+      return;
     }
-    
+
     //conditions for Email field
     if (txtEmailC.getText().isEmpty()) {
-        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_EMAIL);
-        return;
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_EMAIL);
+      return;
     }
     String email = txtEmailC.getText();
     if (!email.matches(EMAIL_PATTERN)) {
-        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_EMAIL_FORMAT);
-        return;
-    } 
-    
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_EMAIL_FORMAT);
+      return;
+    }
+
     //conditions for Password field
     if (txtPasswordC.getText().isEmpty()) {
-        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_PASSWORD);
-        return;
-     } 
-    if(txtPasswordC.getText().length() < 8) {
-        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_MIN_CHAR_PASSWORD);
-        return;
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_PASSWORD);
+      return;
     }
-    
+    if (txtPasswordC.getText().length() < 8) {
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_MIN_CHAR_PASSWORD);
+      return;
+    }
+
     //Once Sign Up button is pressed, the scene will change the the main page
     Parent mainPage = FXMLLoader.load(getClass().getResource(LAYOUT_MAIN_PAGE));
     Scene main_page = new Scene(mainPage);
     Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     app_stage.setScene(main_page);
     app_stage.show();
-  }  
+  }
 }

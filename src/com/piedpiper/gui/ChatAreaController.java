@@ -42,16 +42,15 @@ import javafx.stage.Stage;
  * @author Nailah Azeez
  */
 public class ChatAreaController implements Initializable {
-  
-  @FXML 
+
+  @FXML
   private Button returnMainPgButton;
- 
-  
+
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     // TODO
   }
-   
+
   //click "Main Page" button to return to the main page
   @FXML
   private void mainPgButtonAction(ActionEvent event) throws IOException {
@@ -61,5 +60,5 @@ public class ChatAreaController implements Initializable {
     app_stage.setScene(main_page);
     app_stage.show();
   }
-  
+
 }

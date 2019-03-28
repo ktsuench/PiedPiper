@@ -45,12 +45,12 @@ import javafx.stage.Window;
  * @author Nailah Azeez
  */
 public class ContactsController implements Initializable {
-  
+
   private static final String ERROR_ADD_CONTACT = "Please enter the name of the contact you would like to add";
   private static final String ERROR_DELETE_CONTACT = "Please enter the name of the contact your would like to delete";
   private static final String NAME_PATTERN = "[a-zA-Z]*";
   private static final String ERROR_CONTACT_CHAR = "Only letters are accepted, please try again";
-  
+
   @FXML
   private Button addButton;
 
@@ -83,34 +83,34 @@ public class ContactsController implements Initializable {
   @FXML
   protected void addButtonAction(ActionEvent event) throws IOException {
     String AlertTitle = "Adding Contact Error!";
-    
+
     Window owner = addButton.getScene().getWindow();
     if (addContact.getText().isEmpty()) {
       AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_ADD_CONTACT);
       return;
     }
-    
+
     String contact = addContact.getText();
     if (!contact.matches(NAME_PATTERN)) {
-        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_CONTACT_CHAR);
-        return;
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_CONTACT_CHAR);
+      return;
     }
   }
 
   @FXML
   protected void deleteButtonAction(ActionEvent event) throws IOException {
     String AlertTitle = "Deleting Contact Error!";
-    
+
     Window owner = deleteButton.getScene().getWindow();
     if (deleteContact.getText().isEmpty()) {
       AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_DELETE_CONTACT);
       return;
     }
-    
+
     String contact = deleteContact.getText();
     if (!contact.matches(NAME_PATTERN)) {
-        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_CONTACT_CHAR);
-        return;
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_CONTACT_CHAR);
+      return;
     }
   }
 }
