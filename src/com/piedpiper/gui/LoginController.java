@@ -25,6 +25,11 @@ package com.piedpiper.gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -84,7 +89,7 @@ public class LoginController implements Initializable {
 
   //Login verification
   @FXML
-  protected void loginButtonAction(ActionEvent event) throws IOException {
+  protected void loginButtonAction(ActionEvent event) throws IOException, SQLException, Exception {
     Window owner = loginButton.getScene().getWindow();
     String AlertTitle = "Login Error!";
 
@@ -96,13 +101,43 @@ public class LoginController implements Initializable {
       AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_PASSWORD);
       return;
     }
-
-    //Once Login button is pressed, the scene will change the the main page
-    Parent mainPage = FXMLLoader.load(getClass().getResource(LAYOUT_MAIN_PAGE));
-    Scene main_page = new Scene(mainPage);
-    Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    app_stage.setScene(main_page);
-    app_stage.show();
+    
+    //Database connection
+    Connection db = SQLiteDatabaseManager.getConnection();
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    
+    String email = txtEmailL.getText().toString();
+    String password = txtPasswordL.getText().toString();
+    String loginInfo = "SELECT * FROM user_login WHERE user_email = ? AND user_pass = ?";
+    
+    try {
+      ps = db.prepareStatement(loginInfo);
+      ps.setString(1, email);
+      ps.setString(2, password);
+      
+      rs = ps.executeQuery();
+      
+      if (rs.next()) {
+        //Once Login button is pressed, the scene will change the the main page
+          Parent mainPage = FXMLLoader.load(getClass().getResource(LAYOUT_MAIN_PAGE));
+          Scene main_page = new Scene(mainPage);
+          Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+          app_stage.setScene(main_page);
+          app_stage.show();
+        
+      } else {
+         AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_PASSWORD);
+        return;
+      }
+      
+      
+      
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+    
+    
 
   }
 
