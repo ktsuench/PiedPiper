@@ -23,9 +23,18 @@
  */
 package com.piedpiper.gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -33,11 +42,24 @@ import javafx.fxml.Initializable;
  * @author Nailah Azeez
  */
 public class ChatAreaController implements Initializable {
-  /**
-   * Initializes the controller class.
-   */
+  
+  @FXML 
+  private Button returnMainPgButton;
+ 
+  
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     // TODO
   }
+   
+  //click "Main Page" button to return to the main page
+  @FXML
+  private void mainPgButtonAction(ActionEvent event) throws IOException {
+    Parent mainPage = FXMLLoader.load(getClass().getResource("layouts/mainPage.fxml"));
+    Scene main_page = new Scene(mainPage);
+    Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    app_stage.setScene(main_page);
+    app_stage.show();
+  }
+  
 }

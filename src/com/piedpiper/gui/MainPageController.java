@@ -51,6 +51,9 @@ public class MainPageController implements Initializable {
 
   @FXML
   private Button notificationButton;
+  
+  @FXML 
+  private Button logOutButton;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -80,4 +83,16 @@ public class MainPageController implements Initializable {
   private void notificationButtonAction(ActionEvent event) throws IOException {
     //Pending for now
   }
+  
+  @FXML
+  private void logOutButtonAction(ActionEvent event) throws IOException{
+    Parent loginPage = FXMLLoader.load(getClass().getResource("layouts/Login.fxml"));
+    Scene login_page = new Scene(loginPage);
+    Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    app_stage.setScene(login_page);
+    app_stage.show();
+    
+  }
+  
+
 }
