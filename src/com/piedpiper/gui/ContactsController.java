@@ -80,17 +80,6 @@ public class ContactsController implements Initializable {
   @FXML
   private ListView<String> contactList;
   
-
-  private addContact showContact(ResultSet rs) {
-      addContact p = new addContact();
-      try {
-         p.setId(rs.getInt("id"));
-         p.setEmail(rs.getString("contact_email"));
-      } catch (SQLException ex) {
-      }
-      return p;
-   }
-  
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     try{
