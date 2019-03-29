@@ -78,6 +78,7 @@ public class ServerConnectionManager {
       channels = new HashMap<>();
       connections = new HashMap<>();
       datagrams = new HashMap<>();
+      taskHandler = new TaskHandler();
 
       try {
         selector = Selector.open();

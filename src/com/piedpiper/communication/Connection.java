@@ -105,7 +105,7 @@ public class Connection implements Runnable {
       } else if (this.getTaskType() == TASK_TYPE.WRITE) {
         list = manager.getDatagrams(this.name);
 
-        if (list != null) {
+        if (list != null && list.size() > 0) {
           // get next in queue
           data = list.get(0);
           // remove from queue
