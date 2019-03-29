@@ -23,10 +23,6 @@
  */
 package com.piedpiper.communication;
 
-import com.piedpiper.communication.ChannelSelectorCannotStartException;
-import com.piedpiper.communication.Connection;
-import com.piedpiper.communication.Datagram;
-import com.piedpiper.communication.TaskHandler;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SelectionKey;

@@ -23,8 +23,6 @@
  */
 package com.piedpiper.communication;
 
-import com.piedpiper.communication.Datagram;
-import com.piedpiper.communication.ServerConnectionManager;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.ByteBuffer;
