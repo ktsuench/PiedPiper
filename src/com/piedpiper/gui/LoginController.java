@@ -75,7 +75,9 @@ public class LoginController implements Initializable {
   @FXML
   private TextField txtEmailL;
   @FXML
-  private TextField txtNameC;
+  private TextField txtFirstNameC;
+  @FXML
+  private TextField txtLastNameC;
 
   @FXML
   private PasswordField txtPasswordC;
@@ -143,33 +145,33 @@ public class LoginController implements Initializable {
 
   //Creating an account
   @FXML
-  protected void signUpButtonAction(ActionEvent event) throws IOException {
+  protected void signUpButtonAction(ActionEvent event) throws IOException, SQLException, Exception {
     Window owner = signUpButton.getScene().getWindow();
     String AlertTitle = "Create Account Error!";
-
+    
     //conditions for Name field
-    if (txtNameC.getText().isEmpty()) {
+    if (txtFirstNameC.getText().isEmpty()) {
       AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_NAME);
       return;
     }
-    if (txtNameC.getText().length() < 3) {
+    if (txtFirstNameC.getText().length() < 3) {
       AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_MIN_CHAR_NAME);
       return;
     }
-    String name = txtNameC.getText();
-    if (!name.matches(NAME_PATTERN)) {
-      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_NAME_CHAR);
+    
+    if (txtLastNameC.getText().isEmpty()) {
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_NAME);
       return;
     }
+    if (txtLastNameC.getText().length() < 3) {
+      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_MIN_CHAR_NAME);
+      return;
+    }
+
 
     //conditions for Email field
     if (txtEmailC.getText().isEmpty()) {
       AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_EMAIL);
-      return;
-    }
-    String email = txtEmailC.getText();
-    if (!email.matches(EMAIL_PATTERN)) {
-      AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_EMAIL_FORMAT);
       return;
     }
 
@@ -182,12 +184,62 @@ public class LoginController implements Initializable {
       AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_MIN_CHAR_PASSWORD);
       return;
     }
+    
+    //Database connection
+    Connection db = SQLiteDatabaseManager.getConnection();
+    PreparedStatement ps = null;
+    ResultSet rs = null;
+    
+    String firstName = txtFirstNameC.getText().toString();
+    String lastName = txtLastNameC.getText().toString();
+    String email = txtEmailC.getText().toString();
+    String password = txtPasswordC.getText().toString();
+    String createLogin = "INSERT INTO user_login(user_first_name, user_last_name, user_email, user_pass) VALUES(?, ?, ?, ?)";
+    
+    try {
+      ps = db.prepareStatement(createLogin);
+      ps.setString(1, firstName);
+      ps.setString(2, lastName);
+      ps.setString(3, email);
+      ps.setString(4, password);
+      
+      int rowAfffected = ps.executeUpdate();    
+      rs = ps.getGeneratedKeys();
+      
+      db.commit();
+      
+      if (!firstName.matches(NAME_PATTERN)) {
+        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_NAME_CHAR);
+        return;
+      }
 
-    //Once Sign Up button is pressed, the scene will change the the main page
-    Parent mainPage = FXMLLoader.load(getClass().getResource(LAYOUT_MAIN_PAGE));
-    Scene main_page = new Scene(mainPage);
-    Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    app_stage.setScene(main_page);
-    app_stage.show();
+      if (!lastName.matches(NAME_PATTERN)) {
+        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_NAME_CHAR);
+        return;
+      }
+    
+      if (!email.matches(EMAIL_PATTERN)) {
+        AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_EMAIL_FORMAT);
+        return;
+      }
+
+ 
+      if(rs.next()) {
+        //Once Login button is pressed, the scene will change the the main page
+        Parent mainPage = FXMLLoader.load(getClass().getResource(LAYOUT_MAIN_PAGE));
+        Scene main_page = new Scene(mainPage);
+        Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        app_stage.setScene(main_page);
+        app_stage.show();
+      }
+
+
+    }catch (SQLException e) {
+        e.printStackTrace();  
+    }
+    
+    
+
+    
   }
 }
