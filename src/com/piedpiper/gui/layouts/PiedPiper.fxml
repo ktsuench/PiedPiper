@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="320" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piedpiper.gui.PiedController">
+  <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" blendMode="SRC_ATOP" fill="WHITE" height="263.0" stroke="#22b983" strokeType="INSIDE" strokeWidth="12.0" width="382.0" />
+    <Button fx:id="button" layoutX="143.0" layoutY="153.0" onAction="#startServer" text="Start Server" />
+    <Button fx:id="button1" layoutX="144.0" layoutY="191.0" onAction="#startClient" text="Start Client" />
+      <Text fill="#22b983" layoutX="117.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pied Piper" wrappingWidth="148.6708984375">
+         <font>
+            <Font name="Calibri" size="35.0" />
+         </font>
+      </Text>
+      <ImageView fitHeight="69.0" fitWidth="129.0" layoutX="154.0" layoutY="70.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/logo.PNG" />
+         </image>
+      </ImageView>
+  </children>
+</AnchorPane>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="438.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piedpiper.gui.MainPageController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#22b983bf" height="438.0" layoutX="200.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="12.0" width="206.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#23b881bf" height="438.0" layoutX="403.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="12.0" width="206.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#22b983bf" height="438.0" stroke="WHITE" strokeType="INSIDE" strokeWidth="12.0" width="206.0" />
+      <Label alignment="BASELINE_CENTER" layoutX="31.0" layoutY="190.0" prefHeight="92.0" prefWidth="139.0" text="Add, Remove and View &#10;Friends to Chat with" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="contactsButton" layoutX="50.0" layoutY="274.0" mnemonicParsing="false" onAction="#contactsButtonAction" prefHeight="41.0" prefWidth="100.0" text="Contacts" />
+      <ImageView fitHeight="92.0" fitWidth="100.0" layoutX="54.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/img_162044.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="messageButton" layoutX="254.0" layoutY="274.0" mnemonicParsing="false" onAction="#messageButtonAction" prefHeight="41.0" prefWidth="100.0" text="Message" />
+      <ImageView fitHeight="92.0" fitWidth="109.0" layoutX="257.0" layoutY="66.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/img_328443.png" />
+         </image>
+      </ImageView>
+      <Label alignment="BASELINE_CENTER" layoutX="235.0" layoutY="185.0" prefHeight="103.0" prefWidth="139.0" text="Connect with Friends &#10;and get Chatting" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="14.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="119.0" fitWidth="132.0" layoutX="447.0" layoutY="53.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/_icons_settings_notifications_351538.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="notificationButton" layoutX="454.0" layoutY="274.0" mnemonicParsing="false" onAction="#notificationButtonAction" prefHeight="41.0" prefWidth="111.0" text="Notifications" />
+      <Label alignment="BASELINE_CENTER" layoutX="437.0" layoutY="185.0" prefHeight="103.0" prefWidth="139.0" text="View all received &#10;notifications " textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Calibri Bold" size="14.0" />
+         </font>
+      </Label>
+      <ToolBar layoutX="12.0" layoutY="393.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="38.0" prefWidth="586.0">
+         <items>
+            <Button fx:id="logOutButton" mnemonicParsing="false" onAction="#logOutButtonAction" text="Log Out">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Button>
+         </items>
+      </ToolBar>
+   </children>
+</AnchorPane>

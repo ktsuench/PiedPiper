@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="640.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piedpiper.gui.LoginController">
+    <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#23b883" height="480.0" stroke="#23b883" strokeType="INSIDE" width="276.0" />
+      <Label layoutX="55.0" layoutY="89.0" prefHeight="30.0" prefWidth="166.0" text="Welcome Back!" textFill="WHITE">
+         <font>
+            <Font name="Calibri" size="25.0" />
+         </font>
+      </Label>
+      <PasswordField fx:id="txtPasswordL" layoutX="37.0" layoutY="225.0" prefHeight="42.0" prefWidth="202.0" promptText="Password" />
+      <TextField fx:id="txtEmailL" layoutX="37.0" layoutY="173.0" prefHeight="42.0" prefWidth="202.0" promptText="Email Address" />
+      <Button fx:id="loginButton" layoutX="37.0" layoutY="288.0" mnemonicParsing="false" onAction="#loginButtonAction" prefHeight="31.0" prefWidth="202.0" text="Sign In" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="480.0" layoutX="275.0" stroke="#23b883" strokeType="INSIDE" width="366.0" />
+      <ImageView fx:id="logo" fitHeight="62.0" fitWidth="63.0" layoutX="568.0" layoutY="415.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/logo.PNG" />
+         </image>
+      </ImageView>
+      <PasswordField fx:id="txtPasswordC" layoutX="361.0" layoutY="278.0" prefHeight="42.0" prefWidth="202.0" promptText="Password" />
+      <Button fx:id="signUpButton" layoutX="360.0" layoutY="341.0" mnemonicParsing="false" onAction="#signUpButtonAction" prefHeight="31.0" prefWidth="208.0" text="Sign Up" textFill="#212221" />
+      <Label layoutX="361.0" layoutY="89.0" prefHeight="28.0" prefWidth="194.0" text="Create an Account" textFill="#23b883">
+         <font>
+            <Font name="Calibri" size="25.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtEmailC" layoutX="361.0" layoutY="226.0" prefHeight="42.0" prefWidth="202.0" promptText="Email Address" />
+      <TextField fx:id="txtNameC" layoutX="361.0" layoutY="174.0" prefHeight="42.0" prefWidth="202.0" promptText="Name" />
+    </children>
+</AnchorPane>
