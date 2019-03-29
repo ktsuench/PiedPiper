@@ -23,19 +23,20 @@
  */
 package com.piedpiper.gui;
 
+import com.piedpiper.model.UserProfile;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -63,25 +64,14 @@ public class LoginController implements Initializable {
 
   private MainPageController controller;
 
-  @FXML
-  private Button loginButton;
-
-  @FXML
-  private Button signUpButton;
-
-  @FXML
-  private TextField txtEmailC;
-  @FXML
-  private TextField txtEmailL;
-  @FXML
-  private TextField txtFirstNameC;
-  @FXML
-  private TextField txtLastNameC;
-
-  @FXML
-  private PasswordField txtPasswordC;
-  @FXML
-  private PasswordField txtPasswordL;
+  @FXML private Button loginButton;
+  @FXML private Button signUpButton;
+  @FXML private TextField txtEmailC;
+  @FXML private TextField txtEmailL;
+  @FXML private TextField txtFirstNameC;
+  @FXML private TextField txtLastNameC;
+  @FXML private PasswordField txtPasswordC;
+  @FXML private PasswordField txtPasswordL;
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -111,6 +101,8 @@ public class LoginController implements Initializable {
     String email = txtEmailL.getText();
     String password = txtPasswordL.getText();
     String loginInfo = "SELECT * FROM user_login WHERE user_email = ? AND user_pass = ?";
+    String contactListQuery = "SELECT contact_email FROM addContact, user_contacts WHERE userLoginId = ?"
+        + " AND contactId = user_contacts.id";
 
     try {
       ps = db.prepareStatement(loginInfo);
@@ -120,9 +112,29 @@ public class LoginController implements Initializable {
       rs = ps.executeQuery();
 
       if (rs.next()) {
+        ps = db.prepareStatement(contactListQuery);
+        ps.setInt(1, rs.getInt("id"));
+
+        ResultSet contactsRS = ps.executeQuery();
+        ArrayList<String> contacts = new ArrayList<>();
+
+        while(contactsRS.next()) {
+          contacts.add(contactsRS.getString("contact_email"));
+        }
+
+        UserProfile profile = new UserProfile(
+            rs.getString("user_first_name"),
+            rs.getString("user_last_name"),
+            rs.getString("user_email"),
+            contacts
+        );
+
         //Once Login button is pressed, the scene will change the the main page
-        Parent mainPage = FXMLLoader.load(getClass().getResource(LAYOUT_MAIN_PAGE));
-        Scene main_page = new Scene(mainPage);
+        FXMLLoader mainPage = new FXMLLoader(getClass().getResource(LAYOUT_MAIN_PAGE));
+        Scene main_page = new Scene(mainPage.load());
+
+        mainPage.<MainPageController>getController().initData(profile);
+
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(main_page);
         app_stage.show();
@@ -218,9 +230,19 @@ public class LoginController implements Initializable {
       }
 
       if (rs.next()) {
+        UserProfile profile = new UserProfile(
+            firstName,
+            lastName,
+            email,
+            new ArrayList<>()
+        );
+
         //Once Login button is pressed, the scene will change the the main page
-        Parent mainPage = FXMLLoader.load(getClass().getResource(LAYOUT_MAIN_PAGE));
-        Scene main_page = new Scene(mainPage);
+        FXMLLoader mainPage = new FXMLLoader(getClass().getResource(LAYOUT_MAIN_PAGE));
+        Scene main_page = new Scene(mainPage.load());
+
+        mainPage.<MainPageController>getController().initData(profile);
+
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(main_page);
         app_stage.show();

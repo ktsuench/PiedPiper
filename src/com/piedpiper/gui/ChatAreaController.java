@@ -23,17 +23,23 @@
  */
 package com.piedpiper.gui;
 
+import com.piedpiper.communication.ClientConnectionManager;
+import com.piedpiper.model.UserProfile;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextArea;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 /**
@@ -42,9 +48,28 @@ import javafx.stage.Stage;
  * @author Nailah Azeez
  */
 public class ChatAreaController implements Initializable {
+  private ClientConnectionManager client;
+  private ObservableList<String> contactsList;
+  @FXML private ListView<String> contactsListView;
+  private ObservableList<String> messageList;
+  @FXML private ListView<String> messageListView;
+  @FXML private TextArea messageTextArea;
+  private UserProfile profile;
+  private String recipient;
+  @FXML private Button returnMainPgButton;
+  @FXML private Button sendMessageButton;
 
-  @FXML
-  private Button returnMainPgButton;
+  public void initData(UserProfile profile, ClientConnectionManager client) {
+    this.profile = profile;
+    this.client = client;
+    this.contactsList = FXCollections.observableArrayList(profile.getContacts().toArray());
+    this.messageList = FXCollections.observableArrayList();
+    this.contactsListView.setItems(this.contactsList);
+    this.messageListView.setItems(this.messageList);
+    this.contactsListView.setOnMouseClicked((MouseEvent e) -> {
+      this.recipient = this.contactsListView.getFocusModel().getFocusedItem();
+    });
+  }
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -54,11 +79,26 @@ public class ChatAreaController implements Initializable {
   //click "Main Page" button to return to the main page
   @FXML
   private void mainPgButtonAction(ActionEvent event) throws IOException {
-    Parent mainPage = FXMLLoader.load(getClass().getResource("layouts/mainPage.fxml"));
-    Scene main_page = new Scene(mainPage);
+    FXMLLoader mainPage = new FXMLLoader(getClass().getResource("layouts/mainPage.fxml"));
+    Scene main_page = new Scene(mainPage.load());
+
+    mainPage.<MainPageController>getController().initData(this.profile, this.client);
+
     Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     app_stage.setScene(main_page);
     app_stage.show();
   }
 
+  @FXML
+  private void sendMessageButtonAction(ActionEvent event) {
+    String message = this.messageTextArea.getText();
+    this.messageTextArea.clear();
+
+    this.client.sendMessage(this.recipient, message);
+    this.messageList.add(this.profile.getEmail() + ": " + message);
+  }
+
+  public void updateMessageList(String sender, String message) {
+    this.messageList.add(sender + ": " + message);
+  }
 }

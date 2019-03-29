@@ -105,6 +105,7 @@ public class ClientConnectionManager {
 
     this.DATAGRAMS.add(new Datagram(Datagram.DATA_TYPE.UPDATE_ID, name, ServerConnectionManager.SERVER_NAME, name));
 
+    this.CHANNEL.configureBlocking(false);
     this.CHANNEL.connect(new InetSocketAddress("localhost", 6000));
     this.CHANNEL.register(this.SELECTOR, SelectionKey.OP_READ | SelectionKey.OP_WRITE);
   }

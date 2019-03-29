@@ -23,6 +23,7 @@
  */
 package com.piedpiper.gui;
 
+import com.piedpiper.communication.ServerConnectionManager;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -44,6 +45,8 @@ public class PiedPiper extends Application {
   @Override
   public void start(Stage stage) throws Exception {
     Parent root = FXMLLoader.load(getClass().getResource("layouts/PiedPiper.fxml"));
+
+    ServerConnectionManager.getInstance();
 
     Scene scene = new Scene(root);
 

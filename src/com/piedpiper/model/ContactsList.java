@@ -21,47 +21,43 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.piedpiper.gui;
+package com.piedpiper.model;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import java.util.ArrayList;
 
 /**
  *
  * @author Kent Tsuenchy
  */
-public class PiedController implements Initializable {
-  static private int clientId = 0;
+public class ContactsList {
+  private ArrayList<String> list;
 
-  @Override
-  public void initialize(URL url, ResourceBundle rb) {
-    // TODO
+  public ContactsList(ArrayList<String> contacts) {
+    this.list = contacts;
   }
 
-  @FXML
-  private void startClient(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("layouts/Login.fxml"));
-    Stage stage = new Stage();
-    stage.setScene(new Scene(root));
-    stage.setTitle("Client " + clientId);
-    stage.show();
-    // Hide this current window (if this is what you want)
-    // ((Node) (event.getSource())).getScene().getWindow().hide();
-    clientId++;
+  public ContactsList() {
+    this(new ArrayList<>());
   }
 
-  /*
-   * @FXML
-   * private void startServer(ActionEvent event) {
-   *   System.out.println("Server code not implemented yet...");
-   * }
-  */
+  public void addContact(String contact){
+    this.list.add(contact);
+  }
+
+  public UserProfile getContactInfo(String contact) {
+    // implement later
+    return null;
+  }
+
+  public String removeContact(String contact) {
+    if (this.list.contains(contact)) {
+      return this.list.remove(this.list.indexOf(contact));
+    }
+
+    return null;
+  }
+
+  public String[] toArray() {
+    return this.list.toArray(new String[this.list.size()]);
+  }
 }
