@@ -31,7 +31,7 @@ import javafx.stage.Stage;
 
 /**
  *
- * @author matt
+ * @author Kent Tsuenchy
  */
 public class PiedPiper extends Application {
   /**
@@ -43,7 +43,7 @@ public class PiedPiper extends Application {
 
   @Override
   public void start(Stage stage) throws Exception {
-    Parent root = FXMLLoader.load(getClass().getResource("PiedPiper.fxml"));
+    Parent root = FXMLLoader.load(getClass().getResource("layouts/PiedPiper.fxml"));
 
     Scene scene = new Scene(root);
 
