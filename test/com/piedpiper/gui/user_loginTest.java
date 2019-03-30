@@ -23,47 +23,45 @@
  */
 package com.piedpiper.gui;
 
-import java.lang.reflect.Field;
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author jlamba
  */
 public class user_loginTest {
-  
+
   public user_loginTest() {
   }
-  
+
   @BeforeClass
   public static void setUpClass() {
   }
-  
+
   @AfterClass
   public static void tearDownClass() {
   }
-  
+
   @Before
   public void setUp() {
   }
-  
+
   @After
   public void tearDown() {
   }
-  
-public boolean equals(Object o){
-    if(getClass() == o.getClass()){
-        return true;
-    }
-    else{
-        return false;}
-}
-  
+
+  public boolean equals(Object o) {
+    if (getClass() == o.getClass())
+      return true;
+    else
+      return false;
+  }
+
   /**
    * Test of getId method, of class user_login.
    */
@@ -136,7 +134,7 @@ public boolean equals(Object o){
     user_login instance = new user_login(1, "email");
     instance.setPassword(user_password);
     // TODO review the generated test code and remove the default call to fail.
-    assertTrue(instance.getPassword() == "test1234")
+    assertTrue(instance.getPassword() == "test1234");
   }
-  
+
 }

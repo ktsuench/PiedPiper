@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Kent Tsuenchy
+ * @author sandeepsuri
  */
 public class ContactsList {
   private ArrayList<String> list;

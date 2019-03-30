@@ -28,7 +28,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author Kent Tsuenchy
+ * @author sandeepsuri
  */
 public class UserProfile {
   private ContactsList contacts;
