@@ -25,7 +25,16 @@ package com.piedpiper.gui;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -35,6 +44,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
@@ -48,7 +58,8 @@ public class ContactsController implements Initializable {
 
   private static final String ERROR_ADD_CONTACT = "Please enter the name of the contact you would like to add";
   private static final String ERROR_DELETE_CONTACT = "Please enter the name of the contact your would like to delete";
-  private static final String NAME_PATTERN = "[a-zA-Z]*";
+  private static final String EMAIL_PATTERN = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+      + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$";
   private static final String ERROR_CONTACT_CHAR = "Only letters are accepted, please try again";
 
   @FXML
@@ -65,12 +76,45 @@ public class ContactsController implements Initializable {
 
   @FXML
   private Button doneButton;
-
+  
+  @FXML
+  private ListView<String> contactList;
+  
   @Override
   public void initialize(URL url, ResourceBundle rb) {
-    // TODO
-  }
+    try{
+      //Database Connection
+      Connection db = SQLiteDatabaseManager.getConnection();
+      ResultSet rs = null;
+      PreparedStatement ps = null;
+      
+      try{
+        String sqlAddContact = "SELECT contact_email FROM user_contacts";
+        Statement sm = db.createStatement();
+        
+        rs =  sm.executeQuery(sqlAddContact);    
 
+        while(rs.next()) {
+          String contacts = rs.getString("contact_email");
+//          contactList = new ListView<>();
+//          contactList.getItems().addAll(contacts);
+          ObservableList<String> items = FXCollections.observableArrayList(contacts);
+          contactList.getItems().addAll(items);
+        }
+        
+        
+      } catch (SQLException e){
+        throw e;
+      }
+      
+    } catch (ClassNotFoundException ex){
+      Logger.getLogger(ContactsController.class.getName()).log(Level.SEVERE, null, ex);
+    } catch (Exception ex) {
+      Logger.getLogger(ContactsController.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }
+  
+  
   @FXML
   private void doneButtonAction(ActionEvent event) throws IOException {
     Parent mainPage = FXMLLoader.load(getClass().getResource("layouts/mainPage.fxml"));
@@ -81,7 +125,7 @@ public class ContactsController implements Initializable {
   }
 
   @FXML
-  protected void addButtonAction(ActionEvent event) throws IOException {
+  protected void addButtonAction(ActionEvent event) throws IOException, Exception {
     String AlertTitle = "Adding Contact Error!";
 
     Window owner = addButton.getScene().getWindow();
@@ -91,16 +135,60 @@ public class ContactsController implements Initializable {
     }
 
     String contact = addContact.getText();
-    if (!contact.matches(NAME_PATTERN)) {
+    if (!contact.matches(EMAIL_PATTERN)) {
       AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_CONTACT_CHAR);
       return;
+    }
+    
+    //Database Connection
+    Connection db = SQLiteDatabaseManager.getConnection();
+    ResultSet rs = null;
+    PreparedStatement ps = null;
+    
+    String userEmail = addContact.getText().toString();
+        
+    try{
+        String sqlAddContact = "INSERT INTO user_contacts(contact_email) VALUES(?)";
+        ps = db.prepareStatement(sqlAddContact);
+        ps.setString(1, userEmail);
+        
+        int rowAfffected = ps.executeUpdate();    
+        rs = ps.getGeneratedKeys();
+
+        if(rowAfffected < 0)
+            throw new Exception("User not found in database!", null);
+
+        db.commit();
+    } catch (SQLException e){
+        throw e;
     }
   }
 
   @FXML
-  protected void deleteButtonAction(ActionEvent event) throws IOException {
+  protected void deleteButtonAction(ActionEvent event) throws IOException, SQLException, Exception {
     String AlertTitle = "Deleting Contact Error!";
 
+    //Database Connection
+    Connection db = SQLiteDatabaseManager.getConnection();
+    ResultSet rs = null;
+    PreparedStatement ps = null;
+    
+    String userEmail = deleteContact.getText().toString();
+        
+    try{
+        String sqlAddContact = "DELETE FROM user_contacts WHERE contact_email = ?";
+        ps = db.prepareStatement(sqlAddContact);
+        ps.setString(1, userEmail);
+        
+        int rowAfffected = ps.executeUpdate();    
+        rs = ps.getGeneratedKeys();
+
+
+        db.commit();
+    } catch (SQLException e){
+        throw e;
+    }
+    
     Window owner = deleteButton.getScene().getWindow();
     if (deleteContact.getText().isEmpty()) {
       AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_DELETE_CONTACT);
@@ -108,7 +196,7 @@ public class ContactsController implements Initializable {
     }
 
     String contact = deleteContact.getText();
-    if (!contact.matches(NAME_PATTERN)) {
+    if (!contact.matches(EMAIL_PATTERN)) {
       AlertHelper.showAlert(Alert.AlertType.ERROR, owner, AlertTitle, ERROR_CONTACT_CHAR);
       return;
     }
