@@ -55,6 +55,7 @@ public class user_loginTest {
   @After
   public void tearDown() {
   }
+  
 public boolean equals(Object o){
     if(getClass() == o.getClass()){
         return true;
@@ -62,6 +63,7 @@ public boolean equals(Object o){
     else{
         return false;}
 }
+  
   /**
    * Test of getId method, of class user_login.
    */
@@ -134,7 +136,7 @@ public boolean equals(Object o){
     user_login instance = new user_login(1, "email");
     instance.setPassword(user_password);
     // TODO review the generated test code and remove the default call to fail.
-    assertTrue(instance.getPassword() == "test1234");
+    assertTrue(instance.getPassword() == "test1234")
   }
   
 }
