@@ -66,7 +66,7 @@ public class user_loginTest {
     Integer result = instance.getId();
     assertEquals(expResult, result);
     // TODO review the generated test code and remove the default call to fail.
-    fail("The test case is a prototype.");
+    fail("The test case failed.");
   }
 
   /**
@@ -79,7 +79,7 @@ public class user_loginTest {
     user_login instance = new user_login();
     instance.setId(id);
     // TODO review the generated test code and remove the default call to fail.
-    fail("The test case is a prototype.");
+    fail("The test case failed.");
   }
 
   /**
@@ -93,7 +93,7 @@ public class user_loginTest {
     String result = instance.getEmail();
     assertEquals(expResult, result);
     // TODO review the generated test code and remove the default call to fail.
-    fail("The test case is a prototype.");
+    fail("The test case failed.");
   }
 
   /**
@@ -106,7 +106,7 @@ public class user_loginTest {
     user_login instance = new user_login();
     instance.setEmail(user_email);
     // TODO review the generated test code and remove the default call to fail.
-    fail("The test case is a prototype.");
+    fail("Falied");
   }
 
   /**
@@ -120,7 +120,7 @@ public class user_loginTest {
     String result = instance.getPassword();
     assertEquals(expResult, result);
     // TODO review the generated test code and remove the default call to fail.
-    fail("The test case is a prototype.");
+    fail("Falied");
   }
 
   /**
@@ -133,7 +133,7 @@ public class user_loginTest {
     user_login instance = new user_login();
     instance.setPassword(user_password);
     // TODO review the generated test code and remove the default call to fail.
-    fail("The test case is a prototype.");
+    fail("Falied");
   }
   
 }
