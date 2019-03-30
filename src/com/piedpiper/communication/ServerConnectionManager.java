@@ -25,6 +25,7 @@ package com.piedpiper.communication;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.channels.ClosedChannelException;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.Selector;
 import java.nio.channels.ServerSocketChannel;
@@ -92,6 +93,8 @@ public class ServerConnectionManager {
         // TODO need to check how to kill thread if required to force quit
         while (true)
           try {
+            Thread.sleep(200);
+
             int readyChannels = selector.selectNow();
 
             if (readyChannels == 0)
@@ -112,16 +115,15 @@ public class ServerConnectionManager {
                 continue;
               }
 
-              if (key.isReadable() || key.isWritable())
+              if ((key.isReadable() || key.isWritable()) && connection.getTaskType() == Connection.TASK_TYPE.AVAILABLE) {
                 if (key.isReadable())
                   connection.setTaskType(Connection.TASK_TYPE.READ);
-                else
+                else if (key.isWritable())
                   connection.setTaskType(Connection.TASK_TYPE.WRITE);
-              else {
+              } else
                 startTask = false;
-                // TODO log this to log file
-                LOG.log(Level.WARNING, "Unknown event fired for a channel found in selector.");
-              }
+              // TODO log this to log file
+              // LOG.log(Level.WARNING, "Unknown event fired for a channel found in selector.");
 
               if (startTask)
                 taskHandler.startTask(connection);
@@ -131,13 +133,15 @@ public class ServerConnectionManager {
           } catch (IOException ex) {
             // TODO log this to log file
             LOG.log(Level.SEVERE, null, ex);
+          } catch (InterruptedException ex) {
+            break;
           }
       };
 
       try {
         server = ServerSocketChannel.open();
-        server.socket().bind(new InetSocketAddress(6000));
-        server.configureBlocking(false);
+        server.socket().bind(new InetSocketAddress("localhost", 6000));
+        server.configureBlocking(true);
 
         Runnable startListening = () -> {
           // TODO need to check how to kill thread if required to force quit
@@ -154,9 +158,9 @@ public class ServerConnectionManager {
 
               Connection connection = new Connection(name);
 
-              while (!channel.finishConnect()) {
+              while (channel.isConnectionPending())
                 // do nothing for now, later on do set up if there is any
-              }
+                channel.finishConnect();
 
               connection.toggleConnected();
 
@@ -167,6 +171,8 @@ public class ServerConnectionManager {
               // add to map for clean up later
               channels.put(name, channel);
               connections.put(name, connection);
+            } catch (ClosedChannelException ex) {
+              break;
             } catch (IOException ex) {
               LOG.log(Level.SEVERE, null, ex);
 
@@ -259,6 +265,7 @@ public class ServerConnectionManager {
    *
    * @param oldName
    * @param newName id of client, should not be more than 40 characters
+   * <p>
    * @return
    */
   public boolean updateChannelId(String oldName, String newName) {

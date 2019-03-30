@@ -80,6 +80,8 @@ public class Connection implements Runnable {
 
   @Override
   public void run() {
+    this.ACTIVE.set(true);
+
     try {
       ServerConnectionManager manager = ServerConnectionManager.getInstance();
       SocketChannel channel = manager.getChannel(this.name);
@@ -99,9 +101,10 @@ public class Connection implements Runnable {
         if (data.getReceiver().equals(ServerConnectionManager.SERVER_NAME)) {
           if (data.getType() == Datagram.DATA_TYPE.UPDATE_ID)
             manager.updateChannelId(name, data.getSender());
-        } else
+        } else {
           // add to queue
-          manager.addDatagramToQueue(this.name, data);
+          manager.addDatagramToQueue(data.getReceiver(), data);
+        }
       } else if (this.getTaskType() == TASK_TYPE.WRITE) {
         list = manager.getDatagrams(this.name);
 
@@ -113,6 +116,7 @@ public class Connection implements Runnable {
 
           // send to client
           buffer.put(data.getBytes());
+          buffer.flip();
           channel.write(buffer);
         }
       }
@@ -120,7 +124,10 @@ public class Connection implements Runnable {
       this.setTaskType(TASK_TYPE.AVAILABLE);
     } catch (ChannelSelectorCannotStartException | IOException ex) {
       LOG.log(Level.SEVERE, null, ex);
+      this.ACTIVE.set(false);
     }
+
+    this.ACTIVE.set(false);
   }
 
   public void setName(String name) {
@@ -136,11 +143,11 @@ public class Connection implements Runnable {
   }
 
   public boolean toggleConnected() {
-    return this.ACTIVE.compareAndSet(this.CONNECTED.get(), !this.CONNECTED.get());
+    return this.CONNECTED.compareAndSet(this.CONNECTED.get(), !this.CONNECTED.get());
   }
 
   public boolean toggleCreated() {
-    return this.ACTIVE.compareAndSet(this.CREATED.get(), !this.CREATED.get());
+    return this.CREATED.compareAndSet(this.CREATED.get(), !this.CREATED.get());
   }
 
   public boolean toggleListening() {

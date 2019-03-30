@@ -56,6 +56,10 @@ public class MainPageController implements Initializable {
   @FXML private Button notificationButton;
   private UserProfile profile;
 
+  public void cleanup() {
+    this.client.cleanup();
+  }
+
   public void initData(UserProfile profile) {
     this.profile = profile;
 
@@ -63,6 +67,7 @@ public class MainPageController implements Initializable {
       this.client = new ClientConnectionManager(this.profile.getEmail());
     } catch (IOException | ChannelSelectorCannotStartException ex) {
       // TODO show user an error
+      System.out.println("Failed to start the client connection manager");
       Logger.getLogger(MainPageController.class.getName()).log(Level.SEVERE, null, ex);
     }
   }

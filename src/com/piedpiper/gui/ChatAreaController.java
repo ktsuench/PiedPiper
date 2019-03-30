@@ -62,18 +62,25 @@ public class ChatAreaController implements Initializable {
   public void initData(UserProfile profile, ClientConnectionManager client) {
     this.profile = profile;
     this.client = client;
+    this.client.setClient(this);
     this.contactsList = FXCollections.observableArrayList(profile.getContacts().toArray());
     this.messageList = FXCollections.observableArrayList();
     this.contactsListView.setItems(this.contactsList);
     this.messageListView.setItems(this.messageList);
     this.contactsListView.setOnMouseClicked((MouseEvent e) -> {
       this.recipient = this.contactsListView.getFocusModel().getFocusedItem();
+      this.sendMessageButton.setDisable(false);
     });
+    this.sendMessageButton.setDisable(true);
   }
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
     // TODO
+  }
+
+  public void updateMessageList(String sender, String message) {
+    this.messageList.add(sender + ": " + message);
   }
 
   //click "Main Page" button to return to the main page
@@ -96,9 +103,5 @@ public class ChatAreaController implements Initializable {
 
     this.client.sendMessage(this.recipient, message);
     this.messageList.add(this.profile.getEmail() + ": " + message);
-  }
-
-  public void updateMessageList(String sender, String message) {
-    this.messageList.add(sender + ": " + message);
   }
 }

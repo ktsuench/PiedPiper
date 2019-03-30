@@ -44,6 +44,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -118,9 +119,8 @@ public class LoginController implements Initializable {
         ResultSet contactsRS = ps.executeQuery();
         ArrayList<String> contacts = new ArrayList<>();
 
-        while(contactsRS.next()) {
+        while (contactsRS.next())
           contacts.add(contactsRS.getString("contact_email"));
-        }
 
         UserProfile profile = new UserProfile(
             rs.getString("user_first_name"),
@@ -137,6 +137,9 @@ public class LoginController implements Initializable {
 
         Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         app_stage.setScene(main_page);
+        app_stage.setOnHidden((WindowEvent e) -> {
+          mainPage.<MainPageController>getController().cleanup();
+        });
         app_stage.show();
 
       } else {
