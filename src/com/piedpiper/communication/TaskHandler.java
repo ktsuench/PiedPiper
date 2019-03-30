@@ -21,47 +21,63 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.piedpiper.gui;
+package com.piedpiper.communication;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Kent Tsuenchy
  */
-public class PiedController implements Initializable {
-  static private int clientId = 0;
+public class TaskHandler {
+  private static final Logger LOG = Logger.getLogger(TaskHandler.class.getName());
 
-  @Override
-  public void initialize(URL url, ResourceBundle rb) {
-    // TODO
+  /**
+   *
+   */
+  protected final ThreadPoolExecutor executor;
+
+  /**
+   *
+   */
+  public TaskHandler() {
+    this.executor = (ThreadPoolExecutor) Executors.newCachedThreadPool();
   }
 
-  @FXML
-  private void startClient(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("layouts/Login.fxml"));
-    Stage stage = new Stage();
-    stage.setScene(new Scene(root));
-    stage.setTitle("Client " + clientId);
-    stage.show();
-    // Hide this current window (if this is what you want)
-    // ((Node) (event.getSource())).getScene().getWindow().hide();
-    clientId++;
+  /**
+   *
+   */
+  public void cleanup() {
+    this.executor.shutdown();
+
+    try {
+      if (!this.executor.awaitTermination(1000, TimeUnit.MILLISECONDS))
+        this.executor.shutdownNow();
+    } catch (InterruptedException ex) {
+      this.executor.shutdownNow();
+    }
   }
 
-  /*
-   * @FXML
-   * private void startServer(ActionEvent event) {
-   *   System.out.println("Server code not implemented yet...");
-   * }
-  */
+  /**
+   *
+   * @param r
+   */
+  public void startTask(Runnable r) {
+    this.executor.submit(r);
+  }
+
+  /**
+   *
+   * @param <T>
+   * @param c
+   * @return
+   */
+  public <T> Future<T> startTask(Callable<T> c) {
+    return this.executor.submit(c);
+  }
 }

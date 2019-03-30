@@ -23,11 +23,16 @@
  */
 package com.piedpiper.gui;
 
+import com.piedpiper.communication.ChannelSelectorCannotStartException;
+import com.piedpiper.communication.ServerConnectionManager;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  *
@@ -45,9 +50,18 @@ public class PiedPiper extends Application {
   public void start(Stage stage) throws Exception {
     Parent root = FXMLLoader.load(getClass().getResource("layouts/PiedPiper.fxml"));
 
+    ServerConnectionManager.getInstance();
+
     Scene scene = new Scene(root);
 
     stage.setScene(scene);
+    stage.setOnHidden((WindowEvent e) -> {
+      try {
+        ServerConnectionManager.getInstance().cleanup();
+      } catch (ChannelSelectorCannotStartException ex) {
+        Logger.getLogger(PiedPiper.class.getName()).log(Level.SEVERE, null, ex);
+      }
+    });
     stage.show();
   }
 }

@@ -1,3 +1,7 @@
+package com.piedpiper.model;
+
+import java.util.ArrayList;
+
 /*
  * MIT License
  *
@@ -21,47 +25,53 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-package com.piedpiper.gui;
-
-import java.io.IOException;
-import java.net.URL;
-import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 
 /**
  *
- * @author Kent Tsuenchy
+ * @author sandeepsuri
  */
-public class PiedController implements Initializable {
-  static private int clientId = 0;
+public class UserProfile {
+  private ContactsList contacts;
+  private String email;
+  private String firstname;
+  private String lastname;
 
-  @Override
-  public void initialize(URL url, ResourceBundle rb) {
-    // TODO
+  public UserProfile(String firstname, String lastname, String email, ArrayList<String> contacts) {
+    this.firstname = firstname;
+    this.lastname = lastname;
+    this.email = email;
+    this.contacts = new ContactsList(contacts);
   }
 
-  @FXML
-  private void startClient(ActionEvent event) throws IOException {
-    Parent root = FXMLLoader.load(getClass().getResource("layouts/Login.fxml"));
-    Stage stage = new Stage();
-    stage.setScene(new Scene(root));
-    stage.setTitle("Client " + clientId);
-    stage.show();
-    // Hide this current window (if this is what you want)
-    // ((Node) (event.getSource())).getScene().getWindow().hide();
-    clientId++;
+  public UserProfile(String firstname, String lastname, String email) {
+    this(firstname, lastname, email, new ArrayList<>());
   }
 
-  /*
-   * @FXML
-   * private void startServer(ActionEvent event) {
-   *   System.out.println("Server code not implemented yet...");
-   * }
-  */
+  public ContactsList getContacts() {
+    return contacts;
+  }
+
+  public String getEmail() {
+    return email;
+  }
+
+  public String getFirstname() {
+    return firstname;
+  }
+
+  public String getLastname() {
+    return lastname;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
+
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
+
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
+  }
 }

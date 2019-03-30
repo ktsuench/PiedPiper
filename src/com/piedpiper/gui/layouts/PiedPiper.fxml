@@ -10,8 +10,8 @@
 
 <AnchorPane id="AnchorPane" prefHeight="200.0" prefWidth="320" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piedpiper.gui.PiedController">
   <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" blendMode="SRC_ATOP" fill="WHITE" height="354.0" stroke="#22b983" strokeType="INSIDE" strokeWidth="12.0" width="382.0" />
-    <Button fx:id="button" layoutX="142.0" layoutY="150.0" onAction="#startServer" text="Start Server" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" blendMode="SRC_ATOP" fill="WHITE" height="263.0" stroke="#22b983" strokeType="INSIDE" strokeWidth="12.0" width="382.0" />
+    <!--<Button fx:id="button" layoutX="143.0" layoutY="153.0" onAction="#startServer" text="Start Server" />-->
     <Button fx:id="button1" layoutX="144.0" layoutY="191.0" onAction="#startClient" text="Start Client" />
       <Text fill="#22b983" layoutX="95.0" layoutY="61.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pied Piper" textAlignment="CENTER" wrappingWidth="192.6708984375">
          <font>

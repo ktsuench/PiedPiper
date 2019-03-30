@@ -25,34 +25,41 @@ package com.piedpiper.gui;
 
 import org.junit.After;
 import org.junit.AfterClass;
+import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  *
  * @author jlamba
  */
 public class user_loginTest {
-  
+
   public user_loginTest() {
   }
-  
+
   @BeforeClass
   public static void setUpClass() {
   }
-  
+
   @AfterClass
   public static void tearDownClass() {
   }
-  
+
   @Before
   public void setUp() {
   }
-  
+
   @After
   public void tearDown() {
+  }
+
+  public boolean equals(Object o) {
+    if (getClass() == o.getClass())
+      return true;
+    else
+      return false;
   }
 
   /**
@@ -61,25 +68,23 @@ public class user_loginTest {
   @Test
   public void testGetId() {
     System.out.println("getId");
-    user_login instance = new user_login();
-    Integer expResult = null;
+    user_login instance = new user_login(1, "email");
+    Integer expResult = 1;
     Integer result = instance.getId();
-    assertEquals(expResult, result);
-    // TODO review the generated test code and remove the default call to fail.
-    fail("The test case failed.");
+    instance.equals(result);
   }
 
   /**
    * Test of setId method, of class user_login.
    */
   @Test
-  public void testSetId() {
+  public void testSetId() throws NoSuchFieldException, IllegalAccessException {
     System.out.println("setId");
-    Integer id = null;
-    user_login instance = new user_login();
+    Integer id = 1;
+    user_login instance = new user_login(1, "email");
     instance.setId(id);
     // TODO review the generated test code and remove the default call to fail.
-    fail("The test case failed.");
+    assertTrue(instance.getId() == 1);
   }
 
   /**
@@ -88,12 +93,10 @@ public class user_loginTest {
   @Test
   public void testGetEmail() {
     System.out.println("getEmail");
-    user_login instance = new user_login();
-    String expResult = "";
+    user_login instance = new user_login(1, "jas@gmail.com");
+    String expResult = "jas@gmail.com";
     String result = instance.getEmail();
-    assertEquals(expResult, result);
-    // TODO review the generated test code and remove the default call to fail.
-    fail("The test case failed.");
+    instance.equals(result);
   }
 
   /**
@@ -102,11 +105,11 @@ public class user_loginTest {
   @Test
   public void testSetEmail() {
     System.out.println("setEmail");
-    String user_email = "";
-    user_login instance = new user_login();
+    String user_email = "jas@gmail.com";
+    user_login instance = new user_login(1, "email");
     instance.setEmail(user_email);
     // TODO review the generated test code and remove the default call to fail.
-    fail("Falied");
+    assertTrue(instance.getEmail() == "jas@gmail.com");
   }
 
   /**
@@ -115,12 +118,10 @@ public class user_loginTest {
   @Test
   public void testGetPassword() {
     System.out.println("getPassword");
-    user_login instance = new user_login();
-    String expResult = "";
+    user_login instance = new user_login(1, "email", "test1234");
+    String expResult = "test1234";
     String result = instance.getPassword();
-    assertEquals(expResult, result);
-    // TODO review the generated test code and remove the default call to fail.
-    fail("Falied");
+    instance.equals(result);
   }
 
   /**
@@ -129,11 +130,11 @@ public class user_loginTest {
   @Test
   public void testSetPassword() {
     System.out.println("setPassword");
-    String user_password = "";
-    user_login instance = new user_login();
+    String user_password = "test1234";
+    user_login instance = new user_login(1, "email");
     instance.setPassword(user_password);
     // TODO review the generated test code and remove the default call to fail.
-    fail("Falied");
+    assertTrue(instance.getPassword() == "test1234");
   }
-  
+
 }

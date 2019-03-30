@@ -23,9 +23,14 @@
  */
 package com.piedpiper.gui;
 
+import com.piedpiper.communication.ChannelSelectorCannotStartException;
+import com.piedpiper.communication.ClientConnectionManager;
+import com.piedpiper.model.UserProfile;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,8 +38,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  * FXML Controller class
@@ -42,18 +49,33 @@ import javafx.stage.Stage;
  * @author Nailah Azeez
  */
 public class MainPageController implements Initializable {
+  private ClientConnectionManager client;
+  @FXML private Button contactsButton;
+  @FXML private Button logOutButton;
+  @FXML private Button messageButton;
+  @FXML private Button notificationButton;
+  private UserProfile profile;
 
-  @FXML
-  private Button contactsButton;
+  public void cleanup() {
+    this.client.cleanup();
+  }
 
-  @FXML
-  private Button messageButton;
+  public void initData(UserProfile profile) {
+    this.profile = profile;
 
-  @FXML
-  private Button notificationButton;
+    try {
+      this.client = new ClientConnectionManager(this.profile.getEmail());
+    } catch (IOException | ChannelSelectorCannotStartException ex) {
+      // TODO show user an error
+      System.out.println("Failed to start the client connection manager");
+      Logger.getLogger(MainPageController.class.getName()).log(Level.SEVERE, null, ex);
+    }
+  }
 
-  @FXML
-  private Button logOutButton;
+  public void initData(UserProfile profile, ClientConnectionManager client) {
+    this.profile = profile;
+    this.client = client;
+  }
 
   @Override
   public void initialize(URL url, ResourceBundle rb) {
@@ -62,26 +84,14 @@ public class MainPageController implements Initializable {
 
   @FXML
   private void contactsButtonAction(ActionEvent event) throws IOException {
-    Parent contactsPage = FXMLLoader.load(getClass().getResource("layouts/Contacts.fxml"));
-    Scene contacts_page = new Scene(contactsPage);
+    FXMLLoader contactsPage = new FXMLLoader(getClass().getResource("layouts/Contacts.fxml"));
+    Scene contacts_page = new Scene(contactsPage.load());
+
+    contactsPage.<ContactsController>getController().initData(this.profile, this.client);
+
     Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
     app_stage.setScene(contacts_page);
     app_stage.show();
-  }
-
-  @FXML
-  private void messageButtonAction(ActionEvent event) throws IOException {
-    Parent chatPage = FXMLLoader.load(getClass().getResource("layouts/ChatArea.fxml"));
-    Scene chat_page = new Scene(chatPage);
-    Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-    app_stage.setScene(chat_page);
-    app_stage.show();
-
-  }
-
-  @FXML
-  private void notificationButtonAction(ActionEvent event) throws IOException {
-    //Pending for now
   }
 
   @FXML
@@ -94,4 +104,23 @@ public class MainPageController implements Initializable {
 
   }
 
+  @FXML
+  private void messageButtonAction(ActionEvent event) throws IOException {
+    FXMLLoader chatPage = new FXMLLoader(getClass().getResource("layouts/ChatArea.fxml"));
+    Scene chat_page = new Scene(chatPage.load());
+
+    chatPage.<ChatAreaController>getController().initData(this.profile, this.client);
+
+    Stage app_stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+    app_stage.setScene(chat_page);
+    app_stage.show();
+  }
+
+  @FXML
+  private void notificationButtonAction(ActionEvent event) throws IOException {
+    Window owner = notificationButton.getScene().getWindow();
+
+    //Pending for now
+    AlertHelper.showAlert(Alert.AlertType.INFORMATION, owner, "Coming soon", "This feature has not yet been implemented.");
+  }
 }

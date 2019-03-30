@@ -8,19 +8,22 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" pickOnBounds="false" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piedpiper.gui.ChatAreaController">
+<AnchorPane id="AnchorPane" pickOnBounds="false" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #23b883;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.piedpiper.gui.ChatAreaController">
    <children>
        <ToolBar fx:id="barSearch" prefHeight="32.0" prefWidth="636.0">
        <items>
            <TextField fx:id="fieldSearch" promptText="Enter contact name" />
            <Button fx:id="buttonSearchUp" prefHeight="31.0" prefWidth="67.0" text="Search" />
            <Label fx:id="labelMatches" />
-            <Button fx:id="returnMainPgButton" prefHeight="31.0" prefWidth="97.0" onAction="#mainPgButtonAction" text="Main Menu" />
+            <Button fx:id="returnMainPgButton" onAction="#mainPgButtonAction" prefHeight="31.0" prefWidth="97.0" text="Main Menu" />
+            <Label prefHeight="17.0" prefWidth="262.0" text="Select a user to start chatting" />
        </items>
    </ToolBar>
-      <Button layoutX="529.0" layoutY="343.0" mnemonicParsing="false" text="Send" />
-      <TextArea layoutX="40.0" layoutY="343.0" prefHeight="31.0" prefWidth="465.0" promptText="Type message" />  
-      
+      <Button fx:id="sendMessageButton" layoutX="529.0" layoutY="343.0" mnemonicParsing="false" onAction="#sendMessageButtonAction" text="Send" />
+      <TextArea fx:id="messageTextArea" layoutX="40.0" layoutY="343.0" prefHeight="31.0" prefWidth="465.0" promptText="Type message" />
+      <ListView fx:id="contactsListView" layoutX="14.0" layoutY="48.0" prefHeight="286.0" prefWidth="149.0" />
+      <ListView fx:id="messageListView" layoutX="173.0" layoutY="48.0" prefHeight="286.0" prefWidth="449.0" />
+
    </children>
-   
+
 </AnchorPane>
