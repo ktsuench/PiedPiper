@@ -37,7 +37,7 @@ public class user_login {
     this.user_password = user_password;
   }
   
-  public user_login() {}
+  public user_login(int id, String user_email) {} //Jas added id, user_email and user_passwords in as parameters to test if this causes any erros please delete
   
   public Integer getId() {return id;}
   public void setId(Integer id) {this.id = id;}
